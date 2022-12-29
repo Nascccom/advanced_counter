@@ -4,7 +4,7 @@ type ButtonTypeProps = {
     className: string
     onClick: (e: MouseEvent<HTMLButtonElement>) => void
     nameButton: string
-    disabled?: boolean
+    disabled: boolean
 }
 
 export const Button: React.FC<ButtonTypeProps> = ({

@@ -1,0 +1,56 @@
+$Color: rgb(0 255 255)
+
+
+@mixin border-style
+  border: 0.1rem solid $Color
+  border-radius: 0.5rem
+
+
+.ContainerCounter
+  @include border-style
+  display: flex
+  flex-direction: column
+  align-items: center
+  width: 26rem
+
+.DisplayBorder
+  @include border-style
+  margin: 1rem
+
+.Display
+  display: flex
+  align-items: center
+  justify-content: center
+  font-size: 4em
+  font-weight: 700
+  width: 23rem
+  height: 9rem
+  color: $Color
+
+.LimitingNumber
+  color: rgb(255 0 0)
+
+.errorMessage
+  font-size: 0.5em
+  color: rgb(255 0 0)
+
+.message
+  font-size: 0.4em
+  color: $Color
+
+.ButtonsContainer
+  @include border-style
+  width: 23rem
+  margin-bottom: 1rem
+  text-align: center
+
+  Button
+    width: 4em
+    margin: 1rem
+    border-radius: 0.3rem
+    font-size: 1.5em
+    font-weight: 700
+    background-color: $Color
+
+
+

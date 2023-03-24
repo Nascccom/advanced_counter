@@ -1,7 +1,7 @@
 import React, {MouseEvent} from 'react';
 import '../CounterStyle.sass';
 import './SettingsBlock.sass'
-import {Button} from '../../Button(universal)/Button';
+import {Button} from '../../Common/Button(universal)/Button';
 import {InputSettingValue} from './InputSettingValue/InputSettingValue';
 
 type SettingsBlockTypeProps = {

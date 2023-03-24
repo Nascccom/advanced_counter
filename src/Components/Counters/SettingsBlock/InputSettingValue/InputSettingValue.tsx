@@ -1,5 +1,5 @@
 import React, {ChangeEvent} from 'react';
-import {Input} from '../../../Input (universal)/Input';
+import {Input} from '../../../Common/Input (universal)/Input';
 import '../SettingsBlock.sass'
 
 type InputSettingValueProps = {

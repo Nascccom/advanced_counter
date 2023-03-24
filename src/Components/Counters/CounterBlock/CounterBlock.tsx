@@ -1,6 +1,6 @@
 import React, {MouseEvent} from 'react';
 import '../CounterStyle.sass'
-import {Button} from '../../Button(universal)/Button';
+import {Button} from '../../Common/Button(universal)/Button';
 
 type CounterBlockTypeProps = {
     startValue: number

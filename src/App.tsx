@@ -21,9 +21,9 @@ function App() {
         let settingStartValue = localStorage.getItem('settingStartValue')
         let counterValue = localStorage.getItem('counterValue')
 
-        settingMaxValue !== null ? setMaxValue(JSON.parse(settingMaxValue)) : setMaxValue(maxValue)
-        settingStartValue !== null ? setStartValue(JSON.parse(settingStartValue)) : setStartValue(startValue)
-        counterValue !== null ? setCounterValue(JSON.parse(counterValue)) : setCounterValue(startValue)
+        if (settingMaxValue !== null) setMaxValue(JSON.parse(settingMaxValue))
+        if (settingStartValue !== null) setStartValue(JSON.parse(settingStartValue))
+        if (counterValue !== null) setCounterValue(JSON.parse(counterValue))
     }
 
     const changeSetValues = (startValue: number, maxValue: number) => {

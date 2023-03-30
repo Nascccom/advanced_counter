@@ -3,39 +3,22 @@ import '../CounterStyle.sass';
 import './SettingsBlock.sass'
 import {Button} from '../../Common/Button(universal)/Button';
 import {InputSettingValue} from './InputSettingValue/InputSettingValue';
+import {
+    changeButtonStateAC,
+    changeSetValuesAC,
+    setErrorAndMessageAC,
+    setMaxValueAC,
+    setStartValueAC
+} from "../../../redux/actions";
+import {useAppDispatch, useAppSelector} from "../../../hooks/hooks";
 
-type SettingsBlockTypeProps = {
-    startValue: number
-    setStartValue: (value: number) => void
-    maxValue: number
-    setMaxValue: (value: number) => void
-    changeSetValues: (startValue: number, maxValue: number) => void
-    setError: (error: string) => void
-    error: string
-    setMessage: (error: string) => void
-    setDisabled: (disabled: boolean) => void
-    message: string
-}
 
-export const SettingsBlock: React.FC<SettingsBlockTypeProps> = ({
-                                                                    startValue,
-                                                                    setStartValue,
-                                                                    changeSetValues,
-                                                                    maxValue,
-                                                                    setMaxValue,
-                                                                    setError,
-                                                                    error,
-                                                                    setMessage,
-                                                                    setDisabled,
-                                                                    message
-                                                                }) => {
-      const clickSetHandler = (e: MouseEvent<HTMLButtonElement>) => {
-          changeSetValues(startValue, maxValue)
-          setDisabled(e.currentTarget.disabled)
-      }
+export const SettingsBlock = () => {
+      const dataCounter = useAppSelector((state) => state.counter)
+      const dispatch = useAppDispatch()
 
       const checkConditionCounter = (value: number, type: 'start' | 'max'): boolean => {
-          const valueType = type === 'start' ? maxValue : startValue;
+          const valueType = type === 'start' ? dataCounter.maxValue : dataCounter.startValue;
           const conditionMain = value < 0 || valueType < 0 || valueType === value
 
           switch (type) {
@@ -45,56 +28,58 @@ export const SettingsBlock: React.FC<SettingsBlockTypeProps> = ({
                   return conditionMain || valueType > value
           }
       }
-      const startValueHandler = (valueAsNumber: number, disabled: boolean) => {
-          setStartValue(valueAsNumber)
-          if (checkConditionCounter(valueAsNumber, 'start')) {
-              setError('Incorrect value')
-              setMessage('')
-              setDisabled(!disabled)
-          } else {
-              setError('')
-              setMessage('Enter value and press "set"')
-              setDisabled(disabled)
-          }
+      const mergedDispatchesOnError = (disabled: boolean) => {
+          dispatch(setErrorAndMessageAC('Incorrect value', ''))
+          dispatch(changeButtonStateAC(!disabled))
       }
-      const maxValueHandler = (valueAsNumber: number, disabled: boolean) => {
-          setMaxValue(valueAsNumber)
-          if (checkConditionCounter(valueAsNumber, 'max')) {
-              setError('Incorrect value')
-              setMessage('')
-              setDisabled(!disabled)
-          } else {
-              setError('')
-              setMessage('Enter value and press "set"')
-              setDisabled(disabled)
-          }
+      const mergedDispatchesWithoutError = (disabled: boolean) => {
+          dispatch(setErrorAndMessageAC('', 'Enter value and press "set"'))
+          dispatch(changeButtonStateAC(disabled))
       }
-      const disabledSetButton = !!error || message.length === 0
 
+      const startValueHandler = (value: number, disabled: boolean) => {
+          dispatch(setStartValueAC(value))
+          if (checkConditionCounter(value, 'start')) {
+              mergedDispatchesOnError(!disabled)
+          } else {
+              mergedDispatchesWithoutError(disabled)
+          }
+      }
+      const maxValueHandler = (value: number, disabled: boolean) => {
+          dispatch(setMaxValueAC(value))
+          if (checkConditionCounter(value, 'max')) {
+              mergedDispatchesOnError(!disabled)
+          } else {
+              mergedDispatchesWithoutError(disabled)
+          }
+      }
+
+      const clickSetHandler = (e: MouseEvent<HTMLButtonElement>) => {
+          dispatch(changeSetValuesAC())
+          dispatch(changeButtonStateAC(e.currentTarget.disabled))
+      }
+
+      const disabledSetButton = !!dataCounter.error || dataCounter.message.length === 0
       return (
         <div className={'ContainerCounter'}>
             <div className={'DisplayBorder'}>
                 <div className={'Display ValuesMaxAndMin'}>
-                    <InputSettingValue className={error ? 'errorInput' : ''}
+                    <InputSettingValue className={dataCounter.error ? 'errorInput' : ''}
                                        nameSetting={'Max value:'}
-                                       value={maxValue}
-                                       setValueFunc={setMaxValue}
-                                       valueHandler={maxValueHandler}
-                    />
-                    <InputSettingValue className={error ? 'errorInput' : ''}
+                                       value={dataCounter.maxValue}
+                                       valueHandler={maxValueHandler}/>
+                    <InputSettingValue className={dataCounter.error ? 'errorInput' : ''}
                                        nameSetting={'Start value:'}
-                                       value={startValue}
-                                       setValueFunc={setStartValue}
-                                       valueHandler={startValueHandler}
-
-                    />
+                                       value={dataCounter.startValue}
+                                       valueHandler={startValueHandler}/>
                 </div>
             </div>
             <div className={'ButtonsContainer'}>
                 <Button className={'Button'}
                         onClick={clickSetHandler}
                         nameButton={'set'}
-                        disabled={disabledSetButton}/>
+                        disabled={disabledSetButton}
+                />
             </div>
         </div>
       );

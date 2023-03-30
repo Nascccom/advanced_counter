@@ -2,21 +2,20 @@ import React, {ChangeEvent} from 'react';
 
 type InputTypeProps = {
     className: string
-    onChange: (e: ChangeEvent<HTMLInputElement>) => void
+    callBack: (value: number, disabled: boolean) => void
     value: number
 }
 
-export const Input: React.FC<InputTypeProps> = ({
-                                                    className,
-                                                    onChange,
-                                                    value,
+export const Input: React.FC<InputTypeProps> = ({className, callBack, value}) => {
 
-                                                }) => {
+    const getValue = (e: ChangeEvent<HTMLInputElement>)=> {
+        callBack(+e.currentTarget.value, e.currentTarget.disabled)
+    }
 
     return (
       <input type="number"
              className={className}
-             onChange={onChange}
+             onChange={getValue}
              value={value}
       />
     );

@@ -1,15 +1,16 @@
-import React from 'react';
+
 import {Input} from '../../../Common/Input (universal)/Input';
 import '../SettingsBlock.sass'
+import {FC} from "react";
 
-type InputSettingValueProps = {
+type Props = {
     className: string
     nameSetting: string
     value: number
     valueHandler: (valueAsNumber: number, disabled: boolean) => void
 }
 
-export const InputSettingValue: React.FC<InputSettingValueProps> = ({className, nameSetting, value, valueHandler}) => {
+export const InputSettingValue: FC<Props> = ({className, nameSetting, value, valueHandler}) => {
 
     const getValueHandler = (value: number, disabled: boolean) => {
         valueHandler(value, disabled )

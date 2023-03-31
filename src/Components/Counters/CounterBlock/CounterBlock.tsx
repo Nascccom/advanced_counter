@@ -6,7 +6,7 @@ import {useAppDispatch, useAppSelector} from "../../../hooks/hooks";
 
 
 export const CounterBlock = () => {
-   const dataCounter = useAppSelector((state)=> state.counter)
+    const dataCounter = useAppSelector((state) => state.counter)
     const dispatch = useAppDispatch()
 
     const counterLimiter = (disabled: boolean): void => {
@@ -20,9 +20,9 @@ export const CounterBlock = () => {
 
     const resetNumber = (disabled: boolean): void => {
         dispatch(setCounterAC(dataCounter.startValue))
-        dataCounter.counterValue === dataCounter.maxValue
-          ? dispatch(changeButtonStateAC(disabled))
-          : dispatch(changeButtonStateAC(!disabled))
+
+        const cond = dataCounter.counterValue === dataCounter.maxValue ? disabled : !disabled
+        dispatch(changeButtonStateAC(cond))
     }
 
     const clickIncrementHandler = (e: MouseEvent<HTMLButtonElement>): void => {

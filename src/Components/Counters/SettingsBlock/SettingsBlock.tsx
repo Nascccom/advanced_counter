@@ -28,10 +28,12 @@ export const SettingsBlock = () => {
                   return conditionMain || valueType > value
           }
       }
+
       const mergedDispatchesOnError = (disabled: boolean) => {
           dispatch(setErrorAndMessageAC('Incorrect value', ''))
           dispatch(changeButtonStateAC(!disabled))
       }
+
       const mergedDispatchesWithoutError = (disabled: boolean) => {
           dispatch(setErrorAndMessageAC('', 'Enter value and press "set"'))
           dispatch(changeButtonStateAC(disabled))
@@ -45,6 +47,7 @@ export const SettingsBlock = () => {
               mergedDispatchesWithoutError(disabled)
           }
       }
+
       const maxValueHandler = (value: number, disabled: boolean) => {
           dispatch(setMaxValueAC(value))
           if (checkConditionCounter(value, 'max')) {

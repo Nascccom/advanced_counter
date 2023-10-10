@@ -11,7 +11,6 @@ const initialState = {
 export type InitialStateType = typeof initialState
 
 
-
 export const counterReducer = (state: InitialStateType = initialState, action: commonActionsType): InitialStateType => {
     switch (action.type) {
         case "CHANGE-SET-VALUE":
@@ -51,4 +50,22 @@ export const counterReducer = (state: InitialStateType = initialState, action: c
     }
 }
 
-
+// export const incValueTC = (type: 'start' | 'max', value: number) =>
+//   (dispatch: AppDispatch, getState: () => RootState) => {
+//       const maxValue = getState().counter.maxValue
+//       const startValue = getState().counter.startValue
+//
+//       if (type === 'start') {
+//           dispatch(setStartValueAC(value))
+//           setLS(maxValue, startValue + 1)
+//       } else {
+//           dispatch(setMaxValueAC(value))
+//           setLS(maxValue + 1, startValue)
+//       }
+//   }
+//
+//
+// export const setValuesFromLocalStorageTC = () =>
+//   (dispatch: AppDispatch) => {
+//       getDataLS(dispatch)
+//   }

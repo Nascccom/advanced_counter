@@ -17,6 +17,10 @@ export const SettingsBlock = () => {
       const dataCounter = useAppSelector((state) => state.counter)
       const dispatch = useAppDispatch()
 
+      // useEffect(() => {
+      //     dispatch(setValuesFromLocalStorageTC())
+      // }, [])
+
       const checkConditionCounter = (value: number, type: 'start' | 'max'): boolean => {
           const valueType = type === 'start' ? dataCounter.maxValue : dataCounter.startValue;
           const conditionMain = value < 0 || valueType < 0 || valueType === value
@@ -41,6 +45,8 @@ export const SettingsBlock = () => {
 
       const startValueHandler = (value: number, disabled: boolean) => {
           dispatch(setStartValueAC(value))
+          // dispatch(incValueTC('start', value))
+
           if (checkConditionCounter(value, 'start')) {
               mergedDispatchesOnError(!disabled)
           } else {
@@ -50,6 +56,8 @@ export const SettingsBlock = () => {
 
       const maxValueHandler = (value: number, disabled: boolean) => {
           dispatch(setMaxValueAC(value))
+          // dispatch(incValueTC('max', value))
+
           if (checkConditionCounter(value, 'max')) {
               mergedDispatchesOnError(!disabled)
           } else {
